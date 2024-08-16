@@ -37,6 +37,11 @@
             background-color: #3cb371; 
         }
 
+        .player {
+            background-color: #ffa500;
+            color: white;
+        }
+
         button {
             font-size: 16px;
             margin-top: 20px;
@@ -48,9 +53,11 @@
     <div id="board"></div>
     <button id="roll-dice">Roll Dice</button>
     <p id="dice-result"></p>
+    <p id="position-info"></p>
     <script>
         const board = document.getElementById('board');
         const diceResult = document.getElementById('dice-result');
+        const positionInfo = document.getElementById('position-info');
         const rollDiceButton = document.getElementById('roll-dice');
 
         let playerPosition = 1;
@@ -77,14 +84,38 @@
             return Math.floor(Math.random() * 6) + 1;
         }
 
-        function updateDiceResult() {
+        function updatePlayerPosition() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => cell.classList.remove('player'));
+            const playerCell = cells[100 - playerPosition];
+            playerCell.classList.add('player');
+            positionInfo.textContent = `You are on square ${playerPosition}`;
+        }
+
+        function movePlayer() {
             const diceValue = rollDice();
             diceResult.textContent = `You rolled a ${diceValue}`;
+            playerPosition += diceValue;
+
+            if (playerPosition > 100) {
+                playerPosition = 100;
+            }
+
+            if (snakes[playerPosition]) {
+                playerPosition = snakes[playerPosition];
+                diceResult.textContent += ` (Snake encountered - slid down a snake to ${playerPosition})`;
+            } else if (ladders[playerPosition]) {
+                playerPosition = ladders[playerPosition];
+                diceResult.textContent += ` (Ladder found - climbed a ladder to ${playerPosition})`;
+            }
+
+            updatePlayerPosition();
         }
 
         createBoard();
+        updatePlayerPosition();
 
-        rollDiceButton.addEventListener('click', updateDiceResult);
+        rollDiceButton.addEventListener('click', movePlayer);
     </script>
 </body>
 </html>
