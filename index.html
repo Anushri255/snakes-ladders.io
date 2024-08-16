@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Snakes and Ladders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8a2a2;
+        }
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(10, 50px);
+            grid-template-rows: repeat(10, 50px);
+            gap: 2px;
+            margin: 20px auto;
+            width: fit-content;
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            border: 1px solid #aaa;
+        }
+
+        .snake {
+            background-color: #ff6347;
+        }
+
+        .ladder {
+            background-color: #3cb371; 
+        }
+
+        button {
+            font-size: 16px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Snakes and Ladders</h1>
+    <div id="board"></div>
+    <button id="roll-dice">Roll Dice</button>
+    <p id="message"></p>
+    <script>
+        const board = document.getElementById('board');
+        const message = document.getElementById('message');
+        const rollDiceButton = document.getElementById('roll-dice');
+
+        let playerPosition = 1;
+        const snakes = { 16: 6, 47: 26, 49: 11, 56: 53, 64: 60, 87: 24, 93: 73, 95: 75, 98: 78 };
+        const ladders = { 1: 38, 4: 14, 9: 31, 21: 42, 28: 84, 36: 44, 51: 67, 71: 91, 80: 100 };
+
+        function createBoard() {
+            for (let i = 100; i >= 1; i--) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.textContent = i;
+                
+                if (snakes[i]) {
+                    cell.classList.add('snake');
+                } else if (ladders[i]) {
+                    cell.classList.add('ladder');
+                }
+                
+                board.appendChild(cell);
+            }
+        }
+
+        createBoard();
+
+    </script>
+</body>
+</html>
