@@ -16,7 +16,7 @@
             gap: 2px;
             margin: 20px auto;
             width: fit-content;
-        }
+            }
 
         .cell {
             width: 50px;
@@ -27,14 +27,14 @@
             justify-content: center;
             font-size: 14px;
             border: 1px solid #aaa;
-        }
+            }
 
         .snake {
             background-color: #ff6347;
             background-image: url('snake.jpg');
             background-size: cover;
             background-position: center;
-        }
+         }
 
         .ladder {
             background-color: #3cb371; 
@@ -53,11 +53,13 @@
             margin-top: 20px;
         }
     </style>
+
 </head>
 <body>
     <h1>Snakes and Ladders</h1>
     <div id="board"></div>
     <button id="roll-dice">Roll Dice</button>
+    <button id="reset-game">Restart Game</button>
     <p id="dice-result"></p>
     <p id="position-info"></p>
     <script>
@@ -65,12 +67,14 @@
         const diceResult = document.getElementById('dice-result');
         const positionInfo = document.getElementById('position-info');
         const rollDiceButton = document.getElementById('roll-dice');
+        const resetGameButton = document.getElementById('reset-game');
 
         let playerPosition = 1;
         const snakes = { 16: 6, 47: 26, 49: 11, 56: 53, 64: 60, 87: 24, 93: 73, 95: 75, 98: 78 };
         const ladders = { 1: 38, 4: 14, 9: 31, 21: 42, 28: 84, 36: 44, 51: 67, 71: 91, 80: 100 };
 
         function createBoard() {
+            board.innerHTML = ''; 
             for (let i = 100; i >= 1; i--) {
                 const cell = document.createElement('div');
                 cell.classList.add('cell');
@@ -106,11 +110,21 @@
             if (playerPosition > 100) {
                 playerPosition = 100;
             }
+                    
+            if (playerPosition === 100) {
+                diceResult.textContent += ` (Congratulations! You win!)`;
+                rollDiceButton.disabled = true; 
+                return;
+            }
 
-            if (snakes[playerPosition]) {
+            if (snakes[playerPosition]) 
+            
+            {
                 playerPosition = snakes[playerPosition];
                 diceResult.textContent += ` (Snake encountered - slid down a snake to ${playerPosition})`;
-            } else if (ladders[playerPosition]) {
+            } 
+            
+            else if (ladders[playerPosition]) {
                 playerPosition = ladders[playerPosition];
                 diceResult.textContent += ` (Ladder found - climbed a ladder to ${playerPosition})`;
             }
@@ -118,10 +132,19 @@
             updatePlayerPosition();
         }
 
+        function restartGame() 
+        {
+            playerPosition = 1;
+            updatePlayerPosition();
+            diceResult.textContent = '';
+            rollDiceButton.disabled = false; 
+        }
+
         createBoard();
         updatePlayerPosition();
 
         rollDiceButton.addEventListener('click', movePlayer);
+        resetGameButton.addEventListener('click', restartGame);
     </script>
 </body>
 </html>
