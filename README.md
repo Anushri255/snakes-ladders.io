@@ -2,7 +2,7 @@
 
 Snakes and Ladders game implemented using HTML, CSS, and JavaScript. The game features a grid-based board where players can roll dice to move and encounter snakes and ladders.
 
-## Hosted on 
+## Hosted on https://anushri255.github.io/snakes-ladders.io/
 
 ## How to Play
 
