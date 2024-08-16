@@ -47,10 +47,10 @@
     <h1>Snakes and Ladders</h1>
     <div id="board"></div>
     <button id="roll-dice">Roll Dice</button>
-    <p id="message"></p>
+    <p id="dice-result"></p>
     <script>
         const board = document.getElementById('board');
-        const message = document.getElementById('message');
+        const diceResult = document.getElementById('dice-result');
         const rollDiceButton = document.getElementById('roll-dice');
 
         let playerPosition = 1;
@@ -73,8 +73,18 @@
             }
         }
 
+        function rollDice() {
+            return Math.floor(Math.random() * 6) + 1;
+        }
+
+        function updateDiceResult() {
+            const diceValue = rollDice();
+            diceResult.textContent = `You rolled a ${diceValue}`;
+        }
+
         createBoard();
 
+        rollDiceButton.addEventListener('click', updateDiceResult);
     </script>
 </body>
 </html>
